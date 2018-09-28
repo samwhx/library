@@ -38,6 +38,7 @@ const sqlFindAllBooks = "SELECT * FROM books"
 const sqlFindBookbyId = "SELECT * FROM books WHERE id = ?"
 const sqlFindBookbySearchString = "SELECT * FROM books WHERE (author_firstname LIKE ?) || (author_lastname LIKE ?) || (title LIKE ?)"
 const sqlEditBook = "UPDATE books SET author_firstname = ?, author_lastname= ?, title = ?  WHERE id = ?"
+const sqlAddBook = "INSERT INTO books (author_firstname, author_lastname, title, cover_thumbnail) VALUES (?, ?, ?, ?)"
 const sqlUploadPhoto = "UPDATE books SET cover_thumbnail = ? WHERE id = ?"
 var pool = mysql.createPool ({ 
   host: process.env.DB_HOST,
@@ -79,10 +80,11 @@ var findAllBooks = makeQuery(sqlFindAllBooks, pool)
 var findBookbyId = makeQuery(sqlFindBookbyId, pool)
 var findBookbySearchString = makeQuery(sqlFindBookbySearchString, pool)
 var editBook = makeQuery(sqlEditBook, pool)
+var addBook = makeQuery(sqlAddBook, pool)
 var uploadPhoto = makeQuery(sqlUploadPhoto, pool)
 
 ////////////////////////////////////ROUTES////////////////////////////////////
-// GET all films or search string
+// GET all books or search string
 app.get(API_URI + '/books', (req, res) => {
   console.info('query >>>>>', req.query)
   console.info('name >>>>>', req.query.name)
@@ -143,7 +145,7 @@ app.get(API_URI + '/books', (req, res) => {
   }
 })
 
-// GET one film by Id (params)
+// GET one book by Id (params)
 app.get(API_URI + '/books/:bookId', (req, res) => {
   console.info('params >>>>>', req.params);
   findBookbyId([parseInt(req.params.bookId)]).then ((results) => {
@@ -172,10 +174,21 @@ app.get(API_URI + '/books/:bookId', (req, res) => {
   })
 })
 
-//EDIT one grocery
+// EDIT one book
 app.put(API_URI + '/books/edit', bodyParser.json(), bodyParser.urlencoded(), (req, res) => {
   console.info('body >>>>>', req.body);
   editBook([req.body.firstname, req.body.lastname, req.body.title, req.body.id]).then ((results) => {
+    res.json(results)
+  }).catch((error) => {
+    console.info(error)
+    res.status(500).json(error)
+  })
+})
+
+// ADD one book
+app.post(API_URI + '/books/add', bodyParser.json(), bodyParser.urlencoded(), (req, res) => {
+  console.info('body >>>>>', req.body);
+  addBook([req.body.firstname, req.body.lastname, req.body.title, 'no_book_cover.jpg']).then ((results) => {
     res.json(results)
   }).catch((error) => {
     console.info(error)

@@ -64,6 +64,7 @@ export class UploadComponent implements OnInit {
     this.SearchSvc.uploadImageID(this.editFields).subscribe((results) => {
       console.log('Suscribed Results: ', results);
     });
+    this.route.navigate(['/search']);
   }
 
   clearFile() {

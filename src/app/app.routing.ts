@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { SearchComponent } from './components/search/search.component';
 import { EditComponent } from './components/edit/edit.component';
 import { UploadComponent } from './components/upload/upload.component';
+import { AddComponent } from './components/add/add.component';
 
 const appRoutes = [
     {
@@ -17,6 +18,10 @@ const appRoutes = [
     {
         path: 'edit',
         component: EditComponent,
+    },
+    {
+        path: 'add',
+        component: AddComponent,
     },
     {
         path: 'upload',

@@ -24,13 +24,15 @@ import { HttpModule } from '@angular/http';
 
 // routing
 import { RoutingModule } from './app.routing';
+import { AddComponent } from './components/add/add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     EditComponent,
-    UploadComponent
+    UploadComponent,
+    AddComponent
   ],
   imports: [
     BrowserModule,

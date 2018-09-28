@@ -4,6 +4,8 @@
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+Fully working with each of the below endpoints at the server side!
+
 ---
 
 # Server
@@ -52,3 +54,14 @@ Returns id, author, title, image names of all books in the server where id is 1.
 '/api/books/upload'
 ```
 Returns "message": "Upload ok!" if upload is a success.
+
+## Endpoint: '/api/books/uploadid'
+> Only accepts POST requests.
+
+1. Accepts an object containing `id` value of the book you are intending to change thumbnail image.
+
+2. Should be used right after the `'/api/books/upload'` endpoint.
+
+```Bash
+'/api/books/uploadid'
+```

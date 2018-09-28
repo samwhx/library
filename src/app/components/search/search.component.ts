@@ -65,6 +65,11 @@ export class SearchComponent implements OnInit {
     this.route.navigate(['/edit']);
   }
 
+  // go add page
+  goAddPage() {
+    this.route.navigate(['/add']);
+  }
+
   // submit button
   onSubmit() {
     this.searchCriteria.name = ''; // reset to default

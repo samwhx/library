@@ -38,4 +38,8 @@ export class SearchService {
     return this.http.post(`${environment.api_url}/uploadid`, details);
   }
 
+  addBook(details): Observable<any> {
+    return this.http.post(`${environment.api_url}/add`, details);
+  }
+
 }
