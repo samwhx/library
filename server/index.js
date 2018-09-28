@@ -4,6 +4,7 @@ const express = require('express') // expressjs
 const mysql = require("mysql") // database
 const cors = require('cors') // cross origin requests
 const multer = require('multer') // image upload
+const bodyParser = require('body-parser') // parse body of post/put messages
 
 ////////////////////////////////////METHODS////////////////////////////////////
 // express
@@ -34,6 +35,7 @@ var upload = multer({ storage: storage })
 const sqlFindAllBooks = "SELECT * FROM books"
 const sqlFindBookbyId = "SELECT * FROM books WHERE id = ?"
 const sqlFindBookbySearchString = "SELECT * FROM books WHERE (author_firstname LIKE ?) || (author_lastname LIKE ?) || (title LIKE ?)"
+const sqlEditBook = "UPDATE books SET author_firstname = ?, author_lastname= ?, title = ?  WHERE id = ?"
 var pool = mysql.createPool ({ 
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -73,6 +75,7 @@ var makeQuery = (sql, pool) => {
 var findAllBooks = makeQuery(sqlFindAllBooks, pool)
 var findBookbyId = makeQuery(sqlFindBookbyId, pool)
 var findBookbySearchString = makeQuery(sqlFindBookbySearchString, pool)
+var editBook = makeQuery(sqlEditBook, pool)
 
 ////////////////////////////////////ROUTES////////////////////////////////////
 // GET all films or search string
@@ -90,11 +93,13 @@ app.get(API_URI + '/books', (req, res) => {
         } else {
         name = element.author_lastname
         }
-        let value = { id: "", name: "", title: "", thumbnail: "" }
+        let value = { id: "", fullname: "", title: "", thumbnail: "", firstname: "", lastname: "" }
         value.id = element.id
-        value.name = name
+        value.fullname = name
         value.title = element.title
         value.thumbnail = element.cover_thumbnail
+        value.firstname = element.author_firstname
+        value.lastname = element.author_lastname
         finalResult.push(value)
       })
       console.info('query result to be passed back >>>>> ', finalResult)
@@ -116,11 +121,13 @@ app.get(API_URI + '/books', (req, res) => {
         } else {
         name = element.author_lastname
         }
-        let value = { id: "", name: "", title: "", thumbnail: "" }
+        let value = { id: "", fullname: "", title: "", thumbnail: "", firstname: "", lastname: "" }
         value.id = element.id
-        value.name = name
+        value.fullname = name
         value.title = element.title
         value.thumbnail = element.cover_thumbnail
+        value.firstname = element.author_firstname
+        value.lastname = element.author_lastname
         finalResult.push(value)
       })
       console.info('query result to be passed back >>>>> ', finalResult)
@@ -144,11 +151,13 @@ app.get(API_URI + '/books/:bookId', (req, res) => {
         } else {
         name = element.author_lastname
         }
-        let value = { id: "", name: "", title: "", thumbnail: "" }
+        let value = { id: "", fullname: "", title: "", thumbnail: "", firstname: "", lastname: "" }
         value.id = element.id
-        value.name = name
+        value.fullname = name
         value.title = element.title
         value.thumbnail = element.cover_thumbnail
+        value.firstname = element.author_firstname
+        value.lastname = element.author_lastname
         finalResult.push(value)
       })
       console.info('query result to be passed back >>>>> ', finalResult)
@@ -159,6 +168,18 @@ app.get(API_URI + '/books/:bookId', (req, res) => {
   })
 })
 
+//EDIT one grocery
+app.put(API_URI + '/books/edit', bodyParser.json(), bodyParser.urlencoded(), (req, res) => {
+  console.info('body >>>>>', req.body);
+  editBook([req.body.firstname, req.body.lastname, req.body.title, req.body.id]).then ((results) => {
+    res.json(results)
+  }).catch((error) => {
+    console.info(error)
+    res.status(500).json(error)
+  })
+})
+
+// POST one image for Upload
 app.post(API_URI + '/books/upload', upload.single("bookimage"), (req, res, next)=>{
   res.status(200).json({message: "Upload ok!"});
 });

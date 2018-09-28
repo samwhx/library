@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'; // reactive forms
 import { SearchService } from '../../services/search.service'; // service
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material'; // sort
+import { Router } from '@angular/router'; // routing
 
 @Component({
   selector: 'app-search',
@@ -14,7 +15,7 @@ export class SearchComponent implements OnInit {
   types = ['Author', 'Title', 'Author & Title', 'Id'];
 
   // for table
-  displayedColumns: string[] = ['id', 'thumbnail', 'title', 'name'];
+  displayedColumns: string[] = ['id', 'thumbnail', 'title', 'fullname', 'edit'];
   books = (new MatTableDataSource([]));
   // sort
   @ViewChild(MatSort) sort: MatSort;
@@ -38,7 +39,8 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  constructor(private SearchSvc: SearchService) {
+  constructor(private SearchSvc: SearchService,
+              private route: Router) {
     this.searchForm = this.createFormGroup();
   }
 
@@ -51,8 +53,20 @@ export class SearchComponent implements OnInit {
     this.searchForm.reset();
   }
 
+  // go edit page
+  goEditPage(firstname, lastname, title, thumbnail, id) {
+    this.SearchSvc.editDetails = {
+      'firstname' : firstname,
+      'lastname' : lastname,
+      'title' : title,
+      'thumbnail' : thumbnail,
+      'id' : id,
+    };
+    this.route.navigate(['/edit']);
+  }
+
   // submit button
-  onSubmit () {
+  onSubmit() {
     this.searchCriteria.name = ''; // reset to default
     this.searchCriteria.title = ''; // reset to default
     console.log('Submitted Form data >>>>> ', this.searchForm.value);

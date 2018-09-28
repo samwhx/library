@@ -42,3 +42,13 @@ Returns id, author, title, image names of all books in the server where first or
 Returns id, author, title, image names of all books in the server where id is 1.
 
 **For images, format is in `.jpg` format. e.g.`image.jpg`. To retrieve the image, go to `'/'` e.g. `'/image.jpg'`**
+
+## Endpoint: '/api/books/upload'
+> Only accepts POST requests.
+
+1. Accepts multipart/form-data upload (Image Upload) with name `bookimage`.
+
+```Bash
+'/api/books/upload'
+```
+Returns "message": "Upload ok!" if upload is a success.
