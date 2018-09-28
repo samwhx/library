@@ -15,6 +15,7 @@ export class EditComponent implements OnInit {
     'firstname': '',
     'lastname': '',
     'title': '',
+    'thumbnail': '',
     'id': '',
   };
 
@@ -55,6 +56,11 @@ export class EditComponent implements OnInit {
     this.route.navigate(['/search']);
   }
 
+  // go upload page
+  goUpload() {
+    this.route.navigate(['/upload']);
+  }
+
   ngOnInit() {
     this.editForm.patchValue({
       // @ts-ignore
@@ -64,6 +70,8 @@ export class EditComponent implements OnInit {
       // @ts-ignore
       title: this.SearchSvc.editDetails.title
    });
+   // @ts-ignore
+   this.editFields.thumbnail = this.SearchSvc.editDetails.thumbnail; // for thumbnail loading
     // @ts-ignore
     this.editFields.id = this.SearchSvc.editDetails.id; // for sql update purpose
   }

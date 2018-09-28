@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
 import { EditComponent } from './components/edit/edit.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 // reactive forms
 import { ReactiveFormsModule } from '@angular/forms';
@@ -28,7 +29,8 @@ import { RoutingModule } from './app.routing';
   declarations: [
     AppComponent,
     SearchComponent,
-    EditComponent
+    EditComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,

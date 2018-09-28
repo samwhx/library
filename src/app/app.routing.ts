@@ -1,9 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// router module
 import { RouterModule } from '@angular/router';
+
+// components
 import { SearchComponent } from './components/search/search.component';
 import { EditComponent } from './components/edit/edit.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 const appRoutes = [
     {
@@ -13,6 +17,10 @@ const appRoutes = [
     {
         path: 'edit',
         component: EditComponent,
+    },
+    {
+        path: 'upload',
+        component: UploadComponent,
     },
     {
         path: '',

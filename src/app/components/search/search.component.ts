@@ -12,7 +12,7 @@ import { Router } from '@angular/router'; // routing
 export class SearchComponent implements OnInit {
 
   // list of types for selection
-  types = ['Author', 'Title', 'Author & Title', 'Id'];
+  types = ['Author', 'Title', 'Author & Title', 'ID'];
 
   // for table
   displayedColumns: string[] = ['id', 'thumbnail', 'title', 'fullname', 'edit'];
@@ -70,7 +70,7 @@ export class SearchComponent implements OnInit {
     this.searchCriteria.name = ''; // reset to default
     this.searchCriteria.title = ''; // reset to default
     console.log('Submitted Form data >>>>> ', this.searchForm.value);
-    if (this.searchForm.value.type === 'Id') {
+    if (this.searchForm.value.type === 'ID') {
       if (isFinite(this.searchForm.value.term)) {
         this.SearchSvc.getBook(this.searchForm.value.term).subscribe((results) => {
           console.log('Suscribed Results: ', results);

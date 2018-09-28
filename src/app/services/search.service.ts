@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,14 @@ export class SearchService {
 
   editBook(details): Observable<any> {
     return this.http.put(`${environment.api_url}/edit`, details);
+  }
+
+  uploadImage(details): Observable<any> {
+    return this.http.post(`${environment.api_url}/upload`, details);
+  }
+
+  uploadImageID(details): Observable<any> {
+    return this.http.post(`${environment.api_url}/uploadid`, details);
   }
 
 }

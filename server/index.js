@@ -17,12 +17,14 @@ const API_URI = "/api";
 app.use(cors())
 
 // multer
+global.filename = "";
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, '/home/samuel/Workspace/fsf/server/library/server/public/images')
   },
   filename: function (req, file, cb) {
     console.log(JSON.stringify(file));
+    filename = file.originalname;
     var uploadFileTokens = file.originalname.split('.');
     console.log(uploadFileTokens);
     cb(null, uploadFileTokens[0] + '.' + uploadFileTokens[uploadFileTokens.length-1])
@@ -36,6 +38,7 @@ const sqlFindAllBooks = "SELECT * FROM books"
 const sqlFindBookbyId = "SELECT * FROM books WHERE id = ?"
 const sqlFindBookbySearchString = "SELECT * FROM books WHERE (author_firstname LIKE ?) || (author_lastname LIKE ?) || (title LIKE ?)"
 const sqlEditBook = "UPDATE books SET author_firstname = ?, author_lastname= ?, title = ?  WHERE id = ?"
+const sqlUploadPhoto = "UPDATE books SET cover_thumbnail = ? WHERE id = ?"
 var pool = mysql.createPool ({ 
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -76,6 +79,7 @@ var findAllBooks = makeQuery(sqlFindAllBooks, pool)
 var findBookbyId = makeQuery(sqlFindBookbyId, pool)
 var findBookbySearchString = makeQuery(sqlFindBookbySearchString, pool)
 var editBook = makeQuery(sqlEditBook, pool)
+var uploadPhoto = makeQuery(sqlUploadPhoto, pool)
 
 ////////////////////////////////////ROUTES////////////////////////////////////
 // GET all films or search string
@@ -181,7 +185,16 @@ app.put(API_URI + '/books/edit', bodyParser.json(), bodyParser.urlencoded(), (re
 
 // POST one image for Upload
 app.post(API_URI + '/books/upload', upload.single("bookimage"), (req, res, next)=>{
-  res.status(200).json({message: "Upload ok!"});
+    res.json({message: "Upload ok!"});
+});
+
+// Update image thumbnail
+app.post(API_URI + '/books/uploadid', bodyParser.json(), bodyParser.urlencoded(), (req, res)=>{
+  console.info('body >>>>>', req.body);
+  uploadPhoto([filename, req.body.id]).then ((results) => {
+    console.info ('Results >>>>> ', results)
+    res.json({message: "Database Updated!"});
+  });
 });
 
 // static assets folder
