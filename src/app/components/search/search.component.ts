@@ -13,14 +13,9 @@ export class SearchComponent implements OnInit {
   // list of types for selection
   types = ['Author', 'Title', 'Author & Title', 'Id'];
 
-  // for showing details of film whem clicking on the film id
-  showDetails = false;
-
   // for table
-  displayedColumns: string[] = ['thumbnail', 'title', 'name'];
-  displayedColumnsForDetails: string[] = ['thumbnail', 'title', 'name'];
+  displayedColumns: string[] = ['id', 'thumbnail', 'title', 'name'];
   books = (new MatTableDataSource([]));
-  bookDetails = (new MatTableDataSource([]));
   // sort
   @ViewChild(MatSort) sort: MatSort;
   // paginator
@@ -60,7 +55,6 @@ export class SearchComponent implements OnInit {
   onSubmit () {
     this.searchCriteria.name = ''; // reset to default
     this.searchCriteria.title = ''; // reset to default
-    this.showDetails = false; // reset to default
     console.log('Submitted Form data >>>>> ', this.searchForm.value);
     if (this.searchForm.value.type === 'Id') {
       if (isFinite(this.searchForm.value.term)) {
@@ -92,16 +86,6 @@ export class SearchComponent implements OnInit {
       });
       this.searchForm.reset();
     }
-  }
-
-  // get book details when clicking on picture
-  getBookDetails(id) {
-    console.log('Sent Data >>>>> ID: ', id);
-    this.SearchSvc.getBook(id).subscribe((results) => {
-      console.log('Suscribed Results: ', results);
-      this.bookDetails = new MatTableDataSource(results);
-    });
-    this.showDetails = true;
   }
 
   ngOnInit() {

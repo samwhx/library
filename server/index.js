@@ -1,15 +1,34 @@
 ////////////////////////////////////LIBRARIES////////////////////////////////////
-require('dotenv').config()
-const express = require('express')
-const mysql = require("mysql")
-const cors = require('cors')
+require('dotenv').config() // config files
+const express = require('express') // expressjs
+const mysql = require("mysql") // database
+const cors = require('cors') // cross origin requests
+const multer = require('multer') // image upload
 
 ////////////////////////////////////METHODS////////////////////////////////////
 // express
 const app = express()
 
+// api uri to be appended to all api routes.
+const API_URI = "/api";
+
 // cors
 app.use(cors())
+
+// multer
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/Users/phangty/Projects/day17-workshop/day17-client/server/uploads')
+  },
+  filename: function (req, file, cb) {
+    console.log(JSON.stringify(file));
+    var uploadFileTokens = file.originalname.split('.');
+    console.log(uploadFileTokens);
+    cb(null, uploadFileTokens[0] + '-' + Date.now() + '.'+ uploadFileTokens[uploadFileTokens.length-1])
+  },
+  fieldSize: 20 * 1024 * 1024 // 20MB
+})
+var upload = multer({ storage: storage })
 
 // sql
 const sqlFindAllBooks = "SELECT * FROM books"
@@ -57,7 +76,7 @@ var findBookbySearchString = makeQuery(sqlFindBookbySearchString, pool)
 
 ////////////////////////////////////ROUTES////////////////////////////////////
 // GET all films or search string
-app.get('/api/books', (req, res) => {
+app.get(API_URI + '/books', (req, res) => {
   console.info('query >>>>>', req.query)
   console.info('name >>>>>', req.query.name)
   console.info('title >>>>>', req.query.title)
@@ -114,7 +133,7 @@ app.get('/api/books', (req, res) => {
 })
 
 // GET one film by Id (params)
-app.get('/api/books/:bookId', (req, res) => {
+app.get(API_URI + '/books/:bookId', (req, res) => {
   console.info('params >>>>>', req.params);
   findBookbyId([parseInt(req.params.bookId)]).then ((results) => {
     let finalResult = []
