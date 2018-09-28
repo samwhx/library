@@ -8,7 +8,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 # Server
 
-Navigate to `/server` folder. Run `nodemon` for a dev server (assuming you have nodemon installed). The server will be located at `http://localhost:3000/`, but only the  below end points will be exposed:
+Navigate to `/server` folder. Run `nodemon` for a dev server (assuming you have nodemon installed). The server will be located at `http://localhost:3000/`, but only the below endpoints will be exposed:
 
 ## Endpoint: '/api/books'
 > Only accepts GET requests.
