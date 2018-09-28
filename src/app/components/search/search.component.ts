@@ -71,7 +71,7 @@ export class SearchComponent implements OnInit {
   }
 
   // delete item
-  deleteGrocery(id) {
+  deleteBook(id) {
     if (confirm('Are you sure you want to delete this record?')) {
       this.SearchSvc.deleteBook({'id' : id}).subscribe((results) => {
         console.log('Suscribed Results; ', results);
