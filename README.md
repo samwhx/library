@@ -41,4 +41,4 @@ Returns id, author, title, image names of all books in the server where first or
 ```
 Returns id, author, title, image names of all books in the server where id is 1.
 
-For images, format is in `.jpg` format. e.g.`image.jpg`. To retrieve the image, go to `'/'` e.g. `'/image.jpg'`
+**For images, format is in `.jpg` format. e.g.`image.jpg`. To retrieve the image, go to `'/'` e.g. `'/image.jpg'`**
