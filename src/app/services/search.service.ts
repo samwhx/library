@@ -42,4 +42,8 @@ export class SearchService {
     return this.http.post(`${environment.api_url}/add`, details);
   }
 
+  deleteBook(details): Observable<any> {
+    return this.http.post(`${environment.api_url}/delete`, details);
+  }
+
 }

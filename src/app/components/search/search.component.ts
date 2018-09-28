@@ -15,7 +15,7 @@ export class SearchComponent implements OnInit {
   types = ['Author', 'Title', 'Author & Title', 'ID'];
 
   // for table
-  displayedColumns: string[] = ['id', 'thumbnail', 'title', 'fullname', 'edit'];
+  displayedColumns: string[] = ['id', 'thumbnail', 'title', 'fullname', 'edit', 'delete'];
   books = (new MatTableDataSource([]));
   // sort
   @ViewChild(MatSort) sort: MatSort;
@@ -68,6 +68,17 @@ export class SearchComponent implements OnInit {
   // go add page
   goAddPage() {
     this.route.navigate(['/add']);
+  }
+
+  // delete item
+  deleteGrocery(id) {
+    if (confirm('Are you sure you want to delete this record?')) {
+      this.SearchSvc.deleteBook({'id' : id}).subscribe((results) => {
+        console.log('Suscribed Results; ', results);
+        alert('Record Deleted!');
+        window.location.reload(); // reload as router will not work if it is same page
+      });
+    }
   }
 
   // submit button
