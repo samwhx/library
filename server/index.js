@@ -39,7 +39,7 @@ const sqlFindBookbyId = "SELECT * FROM books WHERE id = ?"
 const sqlFindBookbySearchString = "SELECT * FROM books WHERE (author_firstname LIKE ?) || (author_lastname LIKE ?) || (title LIKE ?)"
 const sqlEditBook = "UPDATE books SET author_firstname = ?, author_lastname= ?, title = ?  WHERE id = ?"
 const sqlAddBook = "INSERT INTO books (author_firstname, author_lastname, title, cover_thumbnail) VALUES (?, ?, ?, ?)"
-const sqlAddBook = "DELETE FROM books WHERE id = ?"
+const sqlDeleteBook = "DELETE FROM books WHERE id = ?"
 const sqlUploadPhoto = "UPDATE books SET cover_thumbnail = ? WHERE id = ?"
 var pool = mysql.createPool ({ 
   host: process.env.DB_HOST,
