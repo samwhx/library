@@ -18,13 +18,13 @@ app.use(cors())
 // multer
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '/Users/phangty/Projects/day17-workshop/day17-client/server/uploads')
+    cb(null, '/home/samuel/Workspace/fsf/server/library/server/public/images')
   },
   filename: function (req, file, cb) {
     console.log(JSON.stringify(file));
     var uploadFileTokens = file.originalname.split('.');
     console.log(uploadFileTokens);
-    cb(null, uploadFileTokens[0] + '-' + Date.now() + '.'+ uploadFileTokens[uploadFileTokens.length-1])
+    cb(null, uploadFileTokens[0] + '.' + uploadFileTokens[uploadFileTokens.length-1])
   },
   fieldSize: 20 * 1024 * 1024 // 20MB
 })
@@ -158,6 +158,10 @@ app.get(API_URI + '/books/:bookId', (req, res) => {
     res.status(500).json(error)
   })
 })
+
+app.post(API_URI + '/books/upload', upload.single("bookimage"), (req, res, next)=>{
+  res.status(200).json({message: "Upload ok!"});
+});
 
 // static assets folder
 app.use(express.static('public'))
