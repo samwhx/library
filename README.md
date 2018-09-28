@@ -8,6 +8,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 # Server
 
+Navigate to `/server` folder. Run `nodemon` for a dev server (assuming you have nodemon installed). The server will be located at `http://localhost:3000/`, but only the  below end points will be exposed:
+
 ## Endpoint: '/api/books'
 > Only accepts GET requests.
 
@@ -18,21 +20,21 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ```
 Returns id, author, title, image names of all books in the server.
 
-2. Querystring with empty name and title
+2. Querystring with empty name and title.
 
 ```Bash
 '/api/books?name=&title='
 ```
 Returns id, author, title, image names of all books in the server.
 
-3. Querystring with filled name and title
+3. Querystring with filled name and title.
 
 ```Bash
 '/api/books?name=harry&title=harry'
 ```
 Returns id, author, title, image names of all books in the server where first or last name of author contains harry, or title of book contains harry.
 
-4. Params with id of book
+4. Params with ID of book.
 
 ```Bash
 '/api/books/1'
