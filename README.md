@@ -65,3 +65,30 @@ Returns "message": "Upload ok!" if upload is a success.
 ```Bash
 '/api/books/uploadid'
 ```
+
+## Endpoint: '/api/books/add'
+> Only accepts POST requests.
+
+1. Adds firstname, lastname, title.
+
+```Bash
+'/api/books/add'
+```
+
+## Endpoint: '/api/books/edit'
+> Only accepts POST requests.
+
+1. Updates firstname, lastname, title.
+
+```Bash
+'/api/books/edit'
+```
+
+## Endpoint: '/api/books/delete'
+> Only accepts POST requests.
+
+1. Deletes record using id.
+
+```Bash
+'/api/books/delete'
+```
